@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -10,9 +10,40 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super do |user|
+      if user.persisted?
+        case user.user_role
+        when "doctor"
+          user.build_doctor(
+            first_name: params[:doctor][:first_name],
+            last_name: params[:doctor][:last_name],
+            specialty: params[:doctor][:specialty],
+            license_number: params[:doctor][:license_number],
+            email: params[:doctor][:email],
+            phone: params[:doctor][:phone],
+            clinic_name: params[:doctor][:clinic_name],
+            clinic_address: params[:doctor][:clinic_address],
+            location: params[:doctor][:location],
+            email_verified: false,
+            phone_verified: false,
+            license_verified: false,
+            profile_picture: params[:doctor][:profile_picture]
+          )
+          user.doctor.save
+        when "patient"
+          user.build_patient(
+            first_name: params[:patient][:first_name],
+            last_name: params[:patient][:last_name],
+            phone: params[:patient][:phone],
+            dob: params[:patient][:dob],
+            address: params[:patient][:address]
+          )
+          user.patient.save
+        end
+      end
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -38,12 +69,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:user_role])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

@@ -25,6 +25,19 @@ class DoctorsController < ApplicationController
     @doctor = Doctor.find(params[:id])
   end
 
+  def edit
+    @doctor = current_user.doctor
+  end
+
+  def update
+    @doctor = current_user.doctor
+    if @doctor.update(doctor_params)
+      redirect_to @doctor, notice: 'Profile updated successfully.'
+    else
+      render :new
+    end
+  end
+
   private
 
   def doctor_params

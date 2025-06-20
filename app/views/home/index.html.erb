@@ -1,2 +1,5 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% if user_signed_in? %>
+  <h3>Welcome <%= @display_name || "User" %>!</h3>
+<% else %>
+  <h3>Welcome, Guest!</h3>
+<% end %>
