@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doctor: one
+  patient: one
+  appointment: one
+  service_name: MyString
+  amount: 9.99
+  discount: 9.99
+  total: 9.99
+  qr_code_url: MyString
+  payment_memo: MyString
+  payment_method: MyString
+  solana_signature: MyString
+  status: MyString
+
+two:
+  doctor: two
+  patient: two
+  appointment: two
+  service_name: MyString
+  amount: 9.99
+  discount: 9.99
+  total: 9.99
+  qr_code_url: MyString
+  payment_memo: MyString
+  payment_method: MyString
+  solana_signature: MyString
+  status: MyString
