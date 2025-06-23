@@ -9,7 +9,7 @@ class InvoicesController < ApplicationController
 
 	def new
 		@invoice = @patient.invoices.new
-		@appointments = @patient.appointments
+		# @appointments = @patient.appointments
 	end
 
 	def create

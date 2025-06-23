@@ -18,7 +18,7 @@
           <% end %>
         </div>
         <div class="col-md-6 text-md-end">
-          <p><strong>Appointment:</strong> <%= @invoice.appointment&.appointment_date&.strftime("%B %d, %Y at %I:%M %p") || "N/A" %></p>
+          <!-- <p><strong>Appointment:</strong> <%#= @invoice.appointment&.appointment_date&.strftime("%B %d, %Y at %I:%M %p") || "N/A" %></p> -->
           <p><strong>Date of Service:</strong> <%= @invoice.date_of_service&.strftime("%B %d, %Y") || "N/A" %></p>
           <p><strong>Due Date:</strong> <%= @invoice.due_date&.strftime("%B %d, %Y") || "N/A" %></p>
         </div>

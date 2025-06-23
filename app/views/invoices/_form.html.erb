@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container card shadow p-4 mt-3">
 	<h2>Invoice created for <%= @patient.full_name %></h2>
 
 
@@ -65,13 +65,13 @@
 		</div>
 
 		<div class="form-group">
-			<%= f.label :payment_method %>
-			<%= f.select :payment_method, ["MEDV", "USDT", "USDC", "Bitcoin", "Card"], { prompt: "Please select payment method" }, { class: "form-select mt-2 mb-2 border-dark" } %>
+			<%#= f.label :payment_method %>
+			<%#= f.select :payment_method, ["MEDV", "USDT", "USDC", "Bitcoin", "Card"], { prompt: "Please select payment method" }, { class: "form-select mt-2 mb-2 border-dark" } %>
 		</div>
 
 		<div class="form-group">
-		  <%= f.label :appointment_id %>
-		  <%= f.collection_select :appointment_id, @appointments, :id, 
+		  <%#= f.label :appointment_id %>
+		  <%#= f.collection_select :appointment_id, @appointments, :id, 
         ->(a) { "#{a.appointment_date.strftime('%B %d, %Y')} - #{a.reason}" },
         { prompt: "Select Appointment" },
         { class: "form-select mt-2 mb-2 border-dark" } %>

@@ -9,14 +9,13 @@
 	    <table class="table table-bordered table-hover shadow-sm">
 	      <thead>
 	        <tr>
-	          <th class="text-white">Invoice ID</th>
-	          <th class="text-white">Patient</th>
-	          <th class="text-white">Provider</th>
-	          <th class="text-white">Appointment</th>
-	          <th class="text-white">Service</th>
-	          <th class="text-white">Payment</th>
-	          <th class="text-white">Status</th>
-	          <th class="text-white">Actions</th>
+	          <th>Invoice ID</th>
+	          <th>Patient</th>
+	          <th>Provider</th>
+	          <th>Service</th>
+	          <th>Payment</th>
+	          <th>Status</th>
+	          <th>Actions</th>
 	        </tr>
 	      </thead>
 	      <tbody>
@@ -25,7 +24,6 @@
 	            <td>#<%= invoice.id %></td>
 	            <td><%= invoice.patient.full_name rescue "N/A" %></td>
 	            <td><%= invoice.doctor.full_name  %></td>
-	            <td><%= invoice.appointment.appointment_date.strftime("%d %b %Y, %I:%M %p") rescue "N/A" %></td>
 	            <td><%= invoice.service_name %></td>
 	            <td><%= invoice.payment_method.titleize if invoice.payment_method.present? %></td>
 	            <td>
@@ -44,6 +42,6 @@
 	    </table>
 	  </div>
   <% else %>
-    <p>No invoices found.</p>
+    <p class="fs-4 text-center bg-warning p-2 fw-bold text-dark">No invoices found.</p>
   <% end %>
 </div>

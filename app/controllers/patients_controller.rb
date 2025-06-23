@@ -1,4 +1,5 @@
 class PatientsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_doctor
 
   def index
@@ -11,17 +12,30 @@ class PatientsController < ApplicationController
 
   def create
     @patient = @doctor.patients.new(patient_params)
-    @doctor.user = current_user
+    # @patient.user = current_user
     if @patient.save
-      redirect_to doctor_patients_path(@doctor), notice: "Patient created successfully."
+      redirect_to doctor_patients_path(@doctor), notice: "Patient added successfully."
     else
-      puts @patient.errors.full_messages
+      # puts @patient.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
     @patient = @doctor.patients.find(params[:id])
+  end
+
+  def edit
+    @patient = current_user.patient
+  end
+
+  def update
+    @patient = current_user.patient
+    if @patient.update(patient_params)
+      redirect_to @patient, notice: "Profile updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private 

@@ -41,7 +41,7 @@ class InvoicePdfGeneratorService
       pdf.text "Clinic: #{@invoice.clinic_name}" if @invoice.clinic_name.present?
       pdf.move_down 10
 
-      pdf.text "Appointment: #{@invoice.appointment&.appointment_date&.strftime("%B %d, %Y at %I:%M %p") || 'N/A'}", size: 11
+      # pdf.text "Appointment: #{@invoice.appointment&.appointment_date&.strftime("%B %d, %Y at %I:%M %p") || 'N/A'}", size: 11
       pdf.text "Date of Service: #{@invoice.date_of_service&.strftime("%B %d, %Y") || 'N/A'}", size: 11
       pdf.text "Due Date: #{@invoice.due_date&.strftime("%B %d, %Y") || 'N/A'}", size: 11
       pdf.move_down 20

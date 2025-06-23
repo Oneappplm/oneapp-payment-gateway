@@ -3,7 +3,7 @@ class Invoice < ApplicationRecord
   belongs_to :patient
   belongs_to :appointment, optional: true
 
-  enum status: { Add commentMore actions
+  enum status: {
     unpaid: 'Unpaid', 
     paid: 'Paid',
     partially_paid: 'Partially Paid',

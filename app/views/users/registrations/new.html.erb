@@ -24,7 +24,8 @@
         <!-- Role Selection -->
         <div class="field mt-2 mb-2">
           <%= f.label :user_role, "Sign up as:" %><br />
-          <%= f.select :user_role, options_for_select([['Doctor', 'doctor'], ['Patient', 'patient']]), {prompt: 'Select Role'},{ class: 'form-select', id: 'user_role_select' } %>
+          <%#= f.select :user_role, options_for_select([['Doctor', 'doctor'], ['Patient', 'patient'], ['Admin', 'admin']]), {prompt: 'Select Role'},{ class: 'form-select', id: 'user_role_select' } %>
+          <%= f.select :user_role, User.user_roles.keys.map { |r| [r.titleize, r] }, {prompt: 'Select Role'}, { required: true, class: 'form-select', id: 'user_role_select' } %>
         </div>
 
         <!-- Doctor Fields -->
@@ -75,8 +76,8 @@
             </div>
 
             <div class="field">
-              <%= label_tag 'patient[phone]', 'Phone Number' %>
-              <%= telephone_field_tag 'patient[phone]', nil, class: 'form-control' %>
+              <%= label_tag 'patient[phone_number]', 'Phone Number' %>
+              <%= telephone_field_tag 'patient[phone_number]', nil, class: 'form-control' %>
             </div>
 
             <div class="field">

@@ -9,6 +9,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        <li>
+          <% if current_user && current_user.doctor %>
+            <%= link_to 'My Patients', doctor_patients_path(current_user.doctor), class: 'nav-link active' %>
+          <% end %>
+        </li>
+
+         <li>
+          <%#= link_to 'My Appointments', doctor_appointments_path(current_user.doctor), class: 'nav-link active' %>
+        </li>
+
+        <li>
+          <% if current_user && current_user.doctor %>
+            <%= link_to 'My Invoices', doctor_invoices_path(current_user.doctor), class: 'nav-link active' %>
+          <% end %>
+        </li>
        <%#  <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>

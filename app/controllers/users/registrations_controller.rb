@@ -4,46 +4,78 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+  def create
+    super do |user|
+      if params[:user][:user_role] == "doctor"
+        user.build_doctor(
+          first_name: params[:doctor][:first_name],
+          last_name: params[:doctor][:last_name],
+          specialty: params[:doctor][:specialty],
+          license_number: params[:doctor][:license_number],
+          email: params[:doctor][:email],
+          phone: params[:doctor][:phone],
+          clinic_name: params[:doctor][:clinic_name],
+          clinic_address: params[:doctor][:clinic_address],
+          location: params[:doctor][:location],
+          email_verified: false,
+          phone_verified: false,
+          license_verified: false,
+          profile_picture: params[:doctor][:profile_picture]
+        ).save
+      end
+    end
+  end
+
+  private
+
+  def sign_up_params
+    params.require(:user).permit(
+      :email, :password, :password_confirmation, :user_role,
+      :first_name, :last_name, :specialty, :license_number, :phone,
+      :clinic_name, :clinic_address, :location
+    )
+  end
+
   # GET /resource/sign_up
   # def new
   #   super
   # end
 
   # POST /resource
-  def create
-    super do |user|
-      if user.persisted?
-        case user.user_role
-        when "doctor"
-          user.build_doctor(
-            first_name: params[:doctor][:first_name],
-            last_name: params[:doctor][:last_name],
-            specialty: params[:doctor][:specialty],
-            license_number: params[:doctor][:license_number],
-            email: params[:doctor][:email],
-            phone: params[:doctor][:phone],
-            clinic_name: params[:doctor][:clinic_name],
-            clinic_address: params[:doctor][:clinic_address],
-            location: params[:doctor][:location],
-            email_verified: false,
-            phone_verified: false,
-            license_verified: false,
-            profile_picture: params[:doctor][:profile_picture]
-          )
-          user.doctor.save
-        when "patient"
-          user.build_patient(
-            first_name: params[:patient][:first_name],
-            last_name: params[:patient][:last_name],
-            phone: params[:patient][:phone],
-            dob: params[:patient][:dob],
-            address: params[:patient][:address]
-          )
-          user.patient.save
-        end
-      end
-    end
-  end
+  # def create
+  #   super do |user|
+  #     if user.persisted?
+  #       case user.user_role
+  #       when "doctor"
+  #         user.build_doctor(
+  #           first_name: params[:doctor][:first_name],
+  #           last_name: params[:doctor][:last_name],
+  #           specialty: params[:doctor][:specialty],
+  #           license_number: params[:doctor][:license_number],
+  #           email: params[:doctor][:email],
+  #           phone: params[:doctor][:phone],
+  #           clinic_name: params[:doctor][:clinic_name],
+  #           clinic_address: params[:doctor][:clinic_address],
+  #           location: params[:doctor][:location],
+  #           email_verified: false,
+  #           phone_verified: false,
+  #           license_verified: false,
+  #           profile_picture: params[:doctor][:profile_picture]
+  #         )
+  #         user.doctor.save
+  #       when "patient"
+  #         user.build_patient(
+  #           first_name: params[:patient][:first_name],
+  #           last_name: params[:patient][:last_name],
+  #           phone: params[:patient][:phone],
+  #           dob: params[:patient][:dob],
+  #           address: params[:patient][:address]
+  #         )
+  #         user.patient.save
+  #       end
+  #     end
+  #   end
+  # end
 
   # GET /resource/edit
   # def edit

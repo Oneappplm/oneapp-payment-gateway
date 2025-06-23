@@ -84,7 +84,7 @@
           <p><%= @patient.last_visit_date&.strftime('%B %d, %Y') || "Not recorded." %></p>
         </div>
       </div>
-
+      <%= link_to 'Edit Profile', edit_doctor_patient_path(@doctor, @patient), class: "btn btn-primary mt-3" %>
       <%= link_to "← Back to Patients", doctor_patients_path(@doctor), class: "btn btn-outline-primary mt-3" %>
 
       <%# if @invoices.present? %>

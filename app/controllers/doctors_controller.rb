@@ -34,14 +34,14 @@ class DoctorsController < ApplicationController
     if @doctor.update(doctor_params)
       redirect_to @doctor, notice: 'Profile updated successfully.'
     else
-      render :new
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
   def doctor_params
-    params.require(:doctor).permit(:first_name, :last_name, :specialty, :license_number, :phone, :profile_picture,
+    params.require(:doctor).permit(:first_name, :last_name, :email, :specialty, :license_number, :phone, :profile_picture,
       :clinic_name, :clinic_address, :location)
   end
 end

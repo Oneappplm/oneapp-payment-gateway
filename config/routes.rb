@@ -6,10 +6,10 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  resources :doctors, only: [:new, :create, :show] do
+  resources :doctors, only: [:new, :create, :show, :edit, :update] do
     resources :appointments, only: [:index, :show]  # Doctor’s view of appointments
 
-    resources :patients, only: [:index, :new, :create, :show] do
+    resources :patients, only: [:index, :new, :create, :show, :edit, :update] do
       resources :appointments, only: [:new, :create, :show] # Patient scheduling appointment
       resources :invoices, only: [:index, :new, :create, :show] do
         get :confirm_invoice_payment
@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
     resources :invoices, only: [:index, :show]
   end
+
+  # resources :patients, only: [:index, :new, :create, :show, :edit, :update]
 
   post "/stripe_checkout", to: "payments#stripe", as: :stripe_checkout
   post "/paypal_checkout", to: "payments#paypal", as: :paypal_checkout
