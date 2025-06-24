@@ -3,7 +3,7 @@
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
       <h4 class="mb-0">Invoice <%= @invoice.invoice_number %></h4>
       <span class="badge bg-<%= @invoice.paid? ? 'success' : 'secondary' %> fs-6">
-        <%= @invoice.status.titleize %>
+        <%= @invoice.status.titleize if @invoice.status.present? %>
       </span>
     </div>
 
@@ -26,14 +26,14 @@
 
       <!-- Billing Details -->
       <div class="row mb-4">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <h5 class="text-secondary">Service Details</h5>
           <p><strong>Service:</strong> <%= @invoice.service_name %></p>
           <% if @invoice.service_description.present? %>
             <p><strong>Description:</strong> <%= @invoice.service_description %></p>
           <% end %>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <h5 class="text-secondary">Charges</h5>
           <ul class="list-unstyled">
             <li><strong>Amount:</strong> $<%= @invoice.amount %></li>
@@ -43,6 +43,27 @@
             <li><strong>MEDV Token:</strong> <%= @invoice.medv_token_amount %> MEDV</li>
             <li><strong>Payment Method:</strong> <%= @invoice.payment_method || "Not Selected" %></li>
           </ul>
+        </div>
+
+        <div class="col-md-4">
+          <% if @invoice.card_payment.present? %>
+          <h5 class="text-secondary">Card Payment</h5>
+            <ul class="list-unstyled">
+              <li><strong>Card:</strong> <%= @invoice.card_payment.masked_number %> (Expires <%= @invoice.card_payment.expiry_date %>)
+              </li>
+              <li>
+                <strong>Cardholder:</strong> <%= @invoice.card_payment.card_holder_name %>
+              </li>
+              <li>
+                <strong>Transaction ID:</strong> <%= @invoice.card_payment.stripe_transaction_id %>
+              </li>
+              <li>
+               <strong>Paid At:</strong> <%= @invoice.card_payment.paid_at.strftime("%Y-%m-%d %H:%M") %> 
+              </li>
+            </ul>
+          <% else %>
+            <p>No card payment details found.</p>
+          <% end %>
         </div>
       </div>
 
@@ -96,7 +117,7 @@
                 <!-- Stripe Payment -->
                 <div id="stripe-payment" class="payment-method d-none text-center">
                   <h5>Pay with Stripe</h5>
-                  <%= button_to "Pay via Stripe", stripe_checkout_path(invoice_id: @invoice.id), method: :post, class: "btn btn-primary" %>
+                  <%= button_to "Pay via Stripe", stripe_checkout_path(invoice_id: @invoice.id), method: :post, form: { data: { turbo: false } }, class: "btn btn-primary" %>
                 </div>
 
                 <!-- PayPal Payment -->
@@ -120,7 +141,7 @@
     </div>
 
     <div class="card-footer text-end">
-      <%#= link_to 'Back to Invoices', invoices_path, class: 'btn btn-outline-secondary' %>
+      <%= link_to '<- Back to Invoices', doctor_patient_invoices_path, class: 'btn btn-outline-secondary' %>
     </div>
   </div>
 </div>

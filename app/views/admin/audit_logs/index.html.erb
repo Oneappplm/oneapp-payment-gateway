@@ -1,0 +1,23 @@
+<div class="container mt-3">
+  <h2>Audit Logs</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Actor</th>
+        <th>Action</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @logs.each do |log| %>
+        <tr>
+          <td><%= log.created_at.strftime('%Y-%m-%d /  %H:%M') %></td>
+          <td><%= log.action %></td>
+          <td><%= log.action_type.titleize %></td>
+          <td><%= log.details %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

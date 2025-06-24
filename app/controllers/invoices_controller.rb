@@ -24,6 +24,11 @@ class InvoicesController < ApplicationController
 		@invoice.status = "unpaid"
 
 		if @invoice.save
+			log_action(
+		    user: current_user,
+		    action_type: :invoice_created,
+		    details: "Invoice #{@invoice.invoice_number} created for patient #{@patient.full_name} (ID: #{@patient.id})"
+		  )
 			InvoiceMailer.send_invoice(@invoice).deliver_now
 			redirect_to [@doctor, @patient, @invoice], notice: "Invoice created and sent to patient!"
 		else
@@ -95,7 +100,7 @@ class InvoicesController < ApplicationController
 	end
 
 	def set_invoice
-		@invoice = @doctor.invoices.find(params[:id])
+		@invoice = @doctor.invoices.includes(:card_payment).find(params[:id])
 	end
 
 	def invoice_params

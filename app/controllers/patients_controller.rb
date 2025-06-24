@@ -26,13 +26,29 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    @patient = current_user.patient
+    @patient = @doctor.patients.find(params[:id])
   end
 
   def update
-    @patient = current_user.patient
+    @patient = @doctor.patients.find(params[:id])
+    old_attributes = @patient.attributes.slice(*patient_params.keys)
     if @patient.update(patient_params)
-      redirect_to @patient, notice: "Profile updated successfully."
+      changes = []
+
+      patient_params.each do |key, new_value|
+        old_value = old_attributes[key]
+
+        next if old_value.to_s == new_value.to_s
+
+        changes << "#{key.humanize} changed from \"#{old_value}\" to \"#{new_value}\""
+      end
+
+      log_action(
+        user: current_user,
+        action_type: :patient_updated,
+        details: "Patient #{@patient.full_name} updated by Dr. #{current_user.doctor.full_name} updated: #{changes.join(', ')}"
+      )
+      redirect_to doctor_patient_path(@doctor, @patient), notice: "Profile updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end

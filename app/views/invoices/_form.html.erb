@@ -65,6 +65,21 @@
 		</div>
 
 		<div class="form-group">
+			<%#= f.label :crypto_type %>
+			<%#= f.select :crypto_type, Invoice.crypto_types.keys.map { |c| [c.titleize, c] }, {prompt: true}, class: "form-control" %>
+		</div>
+
+		<div class="form-group">
+			<%#= f.label :blockchain_network %>
+			<%#= f.select :blockchain_network, Invoice.blockchain_networks.keys.map { |c| [c.titleize, c] }, {prompt: true}, class: "form-control" %>
+		</div>
+
+		<div class="form-group">
+			<%#= f.label :conversion_rate %>
+			<%#= f.number_field :conversion_rate, step: "0.01", class: "form-control" %>
+		</div>
+
+		<div class="form-group">
 			<%#= f.label :payment_method %>
 			<%#= f.select :payment_method, ["MEDV", "USDT", "USDC", "Bitcoin", "Card"], { prompt: "Please select payment method" }, { class: "form-select mt-2 mb-2 border-dark" } %>
 		</div>

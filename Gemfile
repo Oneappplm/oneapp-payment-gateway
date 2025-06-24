@@ -70,3 +70,6 @@ group :test do
 end
 
 gem 'devise'
+gem 'stripe'
+gem 'prawn'
+gem 'prawn-table'

@@ -23,6 +23,11 @@ class SolanaInvoiceJob < ApplicationJob
       amount = invoice.total
 
       invoice.update!(status: "paid")
+      log_action(
+        user: User.find_by(email: "system@job"), # or a specific admin/system user
+        action_type: :payment_processed,
+        details: "Payment of #{amount} confirmed via Solana for invoice #{invoice.invoice_number}"
+      )
       invoice.create_payment!(
         solana_signature: signature,
         payment_method: "solana",

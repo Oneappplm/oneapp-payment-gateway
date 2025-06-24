@@ -25,6 +25,10 @@ Rails.application.routes.draw do
 
   # resources :patients, only: [:index, :new, :create, :show, :edit, :update]
 
+  namespace :admin do
+    resources :audit_logs, only: [:index]
+  end
+
   post "/stripe_checkout", to: "payments#stripe", as: :stripe_checkout
   post "/paypal_checkout", to: "payments#paypal", as: :paypal_checkout
   get  "/payments/stripe_success", to: "payments#stripe_success"

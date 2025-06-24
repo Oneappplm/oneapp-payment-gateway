@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  include AuditLogger
+
   def stripe
     invoice = Invoice.find(params[:invoice_id])
     session = Stripe::Checkout::Session.create(
@@ -21,7 +23,36 @@ class PaymentsController < ApplicationController
     session = Stripe::Checkout::Session.retrieve(params[:session_id])
     if session.payment_status == 'paid'
       invoice = Invoice.find(params[:invoice_id])
-      invoice.update(status: 'paid', payment_method: 'card')
+
+      payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent)
+      charge = payment_intent.latest_charge && Stripe::Charge.retrieve(payment_intent.latest_charge)
+
+      invoice.update(
+        status: 'paid', 
+        payment_method: 'card'
+      )
+
+      # Save card payment details
+      invoice.create_card_payment!(
+        card_type: charge.payment_method_details.card.brand.titleize,
+        masked_number: "**** **** **** #{charge.payment_method_details.card.last4}",
+        expiry_date: "#{charge.payment_method_details.card.exp_month}/#{charge.payment_method_details.card.exp_year.to_s[-2..]}",
+        card_holder_name: charge.billing_details.name,
+        stripe_transaction_id: charge.id,
+        stripe_fee: (charge.balance_transaction ? Stripe::BalanceTransaction.retrieve(charge.balance_transaction).fee / 100.0 : 0),
+        tokenized_data: charge.payment_method,
+        secure_3d: charge.payment_method_details.card.three_d_secure == 'authenticated',
+        payment_gateway: "Stripe",
+        paid_at: Time.at(charge.created),
+        status: 'completed'
+      )
+
+      # Log audit
+      log_action(
+        user: current_user,
+        action_type: "payment_processed",
+        details: "Invoice #{invoice.invoice_number} marked as paid via Stripe (#{charge.id})"
+      )
       redirect_to doctor_patient_invoice_url(invoice.doctor_id, invoice.patient_id, invoice), notice: "Payment successful!"
     else
       redirect_to invoice, alert: "Payment not completed."
