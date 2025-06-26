@@ -73,3 +73,7 @@ gem 'devise'
 gem 'stripe'
 gem 'prawn'
 gem 'prawn-table'
+gem 'lockbox' # For encrypted private keys
+gem 'dotenv-rails' # Optional for managing ENV keys
+gem 'sidekiq'
+gem 'rqrcode'

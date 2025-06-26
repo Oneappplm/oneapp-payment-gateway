@@ -1,0 +1,19 @@
+<div class="card shadow col-lg-6 mx-auto mt-5">
+  <h2 class="card-header">Receive Payment via QR</h2>
+  <div class="card-body text-center">
+    <p>Scan this QR code to pay:</p>
+
+    <% svg = @qr.as_svg(
+      offset: 0,
+      color: '000',
+      shape_rendering: 'crispEdges',
+      module_size: 6,
+      standalone: true
+    ) %>
+
+    <%= raw svg %>
+
+    <p class="mt-3"><strong>Amount:</strong> $10.0</p>
+    <p><strong>To:</strong> <%= current_user.wallet.address %></p>
+  </div>
+</div>

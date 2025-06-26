@@ -1,0 +1,25 @@
+<div class="container mt-3">
+	<h3 class="mt-4">Recent Transactions</h3>
+	<table class="table table-bordered">
+	  <thead>
+	    <tr>
+	      <th>Type</th>
+	      <th>Amount</th>
+	      <th>Status</th>
+	      <th>Reference</th>
+	      <th>Date</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @wallet.wallet_transactions.order(created_at: :desc).limit(10).each do |tx| %>
+	      <tr>
+	        <td><%= tx.tx_type.humanize %></td>
+	        <td><%= tx.amount %> MEDV</td>
+	        <td><%= tx.status %></td>
+	        <td><%= tx.reference_id %></td>
+	        <td><%= tx.created_at.strftime("%d %b %Y, / %I:%M %p") %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>

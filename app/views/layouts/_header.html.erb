@@ -1,22 +1,25 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">OneApp</a>
+    <a class="navbar-brand" href="/">OneApp</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li> -->
+
+        <li>
+          <% if current_user && current_user.doctor %>
+            <%= link_to 'My Profile', doctor_path(current_user.doctor), class: 'nav-link active' %>
+          <% end %>
         </li>
+
         <li>
           <% if current_user && current_user.doctor %>
             <%= link_to 'My Patients', doctor_patients_path(current_user.doctor), class: 'nav-link active' %>
           <% end %>
-        </li>
-
-         <li>
-          <%#= link_to 'My Appointments', doctor_appointments_path(current_user.doctor), class: 'nav-link active' %>
         </li>
 
         <li>
@@ -24,6 +27,23 @@
             <%= link_to 'My Invoices', doctor_invoices_path(current_user.doctor), class: 'nav-link active' %>
           <% end %>
         </li>
+
+         <li>
+          <% if current_user && current_user.doctor %>
+            <%= link_to 'Audit Logs', admin_audit_logs_path, class: 'nav-link active' %>
+          <% end %>
+        </li>
+
+        <li>
+          <% if current_user %>
+            <%= link_to 'My Wallet', wallet_path(current_user.wallet), class: 'nav-link active' %>
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to 'Wallet Transactions', wallet_transactions_path, class: 'nav-link active' %>
+        </li>
+
        <%#  <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>

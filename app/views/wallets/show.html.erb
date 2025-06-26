@@ -1,0 +1,62 @@
+<div class="container col-lg-6 mx-auto mt-3 card shadow p-4">
+	<h2 class="mb-3">My Wallet</h2>
+
+	<p><strong>Address:</strong> <%= @wallet.address %></p>
+	
+	<% if @last_transaction %>
+	  <p><strong>Previous Balance:</strong> 
+	    <%= number_with_precision(@wallet.balance - @last_transaction.amount, precision: 2) %> MEDV
+	  </p>
+
+	  <p><strong>Last Top-Up:</strong> 
+	    +<%= number_with_precision(@last_transaction.amount, precision: 2) %> MEDV 
+	    (on <%= @last_transaction.created_at.strftime("%Y-%m-%d / %H:%M") %>)
+	  </p>
+
+	  <% usd = @last_transaction.metadata["usd"] rescue nil %>
+	  <% rate = @last_transaction.metadata["rate"] rescue nil %>
+
+	  <% if usd && rate %>
+	    <p><strong>Conversion:</strong> 
+	      $<%= number_with_precision(usd, precision: 2) %> × 
+	      <%= number_with_precision(rate, precision: 2) %> = 
+	      <%= number_with_precision(usd * rate, precision: 2) %> MEDV
+	    </p>
+	  <% end %>
+	<% end %>
+
+
+	<p><strong>Current Balance:</strong> <%= number_with_precision(@wallet.balance, precision: 2) %> MEDV</p>
+
+	<hr>
+
+	<h3>Top-Up Wallet</h3>
+	<%= form_with url: wallet_top_up_stripe_path, method: :post, data: { turbo: false } do %>
+		<label>Amount (USD):</label>
+    <%= number_field_tag :amount, 5, step: 0.01, class: 'form-control border-dark mt-2 mb-2', id: 'usd_input_stripe' %>
+    <code class="fw-bold" id="conversion_display_stripe">This will be converted to 20.00 MEDV</code>
+	  <%= submit_tag "Pay with Stripe", class: 'btn btn-primary mt-2 w-100' %>
+	<% end %>
+
+	<%#= link_to "Simulate QR Payment", scan_qr_wallets_path, class: 'btn btn-primary mt-2' %>
+</div>
+<script>
+  const conversionRate = 4.0; // Match ConversionRateService
+
+  function updateStripeConversion() {
+    const usdInput = document.getElementById("usd_input_stripe");
+    const display = document.getElementById("conversion_display_stripe");
+
+    if (usdInput && display) {
+      const usd = parseFloat(usdInput.value || "0");
+      const medv = (usd * conversionRate).toFixed(2);
+      display.innerText = `This will be converted to ${medv} MEDV (1 USD = ${conversionRate} MEDV)`;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    updateStripeConversion();
+    const usdInputStripe = document.getElementById("usd_input_stripe");
+    usdInputStripe && usdInputStripe.addEventListener("input", updateStripeConversion);
+  });
+</script>

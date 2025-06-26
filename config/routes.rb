@@ -29,6 +29,22 @@ Rails.application.routes.draw do
     resources :audit_logs, only: [:index]
   end
 
+  resources :wallets, only: [:show] do
+    collection do
+      post :top_up
+      get :scan_qr
+    end
+  end
+
+  get 'wallet_transactions', to: 'wallets#wallet_transactions'
+  get 'qr_request', to: 'wallets#qr_request'
+
+  get '/conversion_rate', to: 'conversion#medv_to_usd'
+  post '/webhooks/stripe', to: 'payment_webhooks#stripe'
+
+  post '/wallet_top_up/stripe', to: 'wallet_top_ups#stripe', as: :wallet_top_up_stripe
+  get '/wallet_top_up/success', to: 'wallet_top_ups#stripe_success', as: :wallet_top_up_stripe_success
+
   post "/stripe_checkout", to: "payments#stripe", as: :stripe_checkout
   post "/paypal_checkout", to: "payments#paypal", as: :paypal_checkout
   get  "/payments/stripe_success", to: "payments#stripe_success"

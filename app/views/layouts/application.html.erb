@@ -8,10 +8,29 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- html5-qrcode -->
+    <%= javascript_include_tag "https://unpkg.com/html5-qrcode" %>
   </head>
 
   <body>
     <%= render 'layouts/header' %>
     <%= yield %>
   </body>
+
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: <weight>;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+  </style>
 </html>

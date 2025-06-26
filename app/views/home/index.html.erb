@@ -1,5 +1,7 @@
-<% if user_signed_in? %>
-  <h3>Welcome <%= @display_name || "User" %>!</h3>
-<% else %>
-  <h3>Welcome Guest!</h3>
-<% end %>
+<div class="container mt-5 text-center">
+  <% if user_signed_in? %>
+    <h1>Welcome Dr. <%= @display_name || "User" %>!</h1>
+  <% else %>
+    <h1>Welcome Guest!</h1>
+  <% end %>
+</div>
