@@ -1,26 +1,26 @@
-# README
+## OneApp Payment Gateway
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby Version: **3.2.2**
+Rails Version: **7.1.5.1**
+Bundler version **2.6.2**
+Database: **postgres (PostgreSQL) 16.9**
 
-Things you may want to cover:
+**Setup:**
 
-* Ruby version - "3.2.2"
-* Rails version - "7.1.5"
-* Postgresql version - "1.1"
+ 1. Install ruby using rbenv
+ 2. bundle install
 
-* System dependencies
+**Rake Tasks Setup:**
 
-* Configuration
+     - rake db:reset
+     - rake db:migrate
 
-* Database creation
+**Start Local Server:**
 
-* Database initialization
+     - rails s
 
-* How to run the test suite
+**Task Workflow:**
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ 1. Create new branch againsts master branch for your task
+ 2. after done on development, create a PR request
+ 3. make sure your commits is only 1, if more than one, use rebase squashing method: **git rebase -i HEAD~{number_of_commits}**
