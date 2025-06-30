@@ -1,4 +1,4 @@
-<div class="container my-5">
+<div class="container my-3">
   <div class="card shadow-lg border-0">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
       <h4 class="mb-0">Invoice <%= @invoice.invoice_number %></h4>
@@ -77,6 +77,7 @@
         </div>
           <%= link_to "Download Invoice PDF", download_pdf_doctor_patient_invoice_path(@doctor, @patient, @invoice), class: "btn btn-primary" %>
       <% else %>
+     
         <div class="accordion" id="paymentAccordion">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -89,7 +90,9 @@
                 <div class="mb-4 text-center">
                   <button class="btn btn-outline-dark me-2" onclick="selectPayment('solana')">Solana</button>
                   <button class="btn btn-outline-success me-2" onclick="selectPayment('stripe')">Stripe</button>
-                  <button class="btn btn-outline-info" onclick="selectPayment('paypal')">PayPal</button>
+                  <!-- <button class="btn btn-outline-info" onclick="selectPayment('paypal')">PayPal</button> -->
+
+                  <button class="btn btn-outline-info" onclick="selectPayment('medv')">MEDV</button>
                 </div>
 
                 <!-- Solana Payment -->
@@ -124,6 +127,14 @@
                 <div id="paypal-payment" class="payment-method d-none text-center">
                   <h5>Pay with PayPal</h5>
                   <%= button_to "Pay via PayPal", paypal_checkout_path(invoice_id: @invoice.id), method: :post, class: "btn btn-info" %>
+                </div>
+
+                 <%#= button_to "Pay0 with MEDV", pay_with_medv_doctor_patient_invoice_path(@doctor, @patient, @invoice), method: :post, data: { confirm: "Are you sure?" }, class: 'btn btn-primary mb-3' %>
+
+                <!-- MEDV Payment -->
+                <div id="medv-payment" class="payment-method d-none text-center">
+                  <h5>Pay with MEDV</h5>
+                  <%= button_to "Pay via MEDV", pay_with_medv_doctor_patient_invoice_path(@doctor, @patient, @invoice), method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-info" %>
                 </div>
 
                 <hr>

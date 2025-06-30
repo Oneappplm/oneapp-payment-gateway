@@ -48,6 +48,11 @@ class WalletsController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
+  def transactions
+    @wallet = Wallet.find(params[:id])
+    @transactions = @wallet.wallet_transactions.recent
+  end
+
   private
 
   def set_wallet

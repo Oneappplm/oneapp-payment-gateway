@@ -32,7 +32,8 @@ class WalletTopUpsController < ApplicationController
 
       # Credit the tokens (real or simulated)
       wallet = current_user.wallet
-      SolanaWalletService.credit_tokens(wallet.address, tokens)
+      # SolanaWalletService.credit_tokens(wallet.address, tokens)
+      SolanaWalletService.credit_tokens(wallet, tokens)
       wallet.increment!(:balance, tokens)
 
       WalletTransaction.create!(

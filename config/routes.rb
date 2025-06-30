@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :patients, only: [:index, :new, :create, :show, :edit, :update] do
       resources :appointments, only: [:new, :create, :show] # Patient scheduling appointment
       resources :invoices, only: [:index, :new, :create, :show] do
+        post :pay_with_medv, on: :member
         get :confirm_invoice_payment
         member do
           get :download_pdf
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   # resources :patients, only: [:index, :new, :create, :show, :edit, :update]
 
   namespace :admin do
+    resources :wallets, only: [:index]
     resources :audit_logs, only: [:index]
   end
 
@@ -34,7 +36,13 @@ Rails.application.routes.draw do
       post :top_up
       get :scan_qr
     end
+
+    member do
+      get :transactions
+    end
   end
+
+  # post 'invoices/:id/pay_with_medv', to: 'invoices#pay_with_medv', as: :pay_with_medv
 
   get 'wallet_transactions', to: 'wallets#wallet_transactions'
   get 'qr_request', to: 'wallets#qr_request'

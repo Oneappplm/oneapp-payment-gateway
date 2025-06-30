@@ -1,0 +1,33 @@
+<div class="container mt-3">
+	<h2>Transaction History</h2>
+
+	<table>
+	  <thead>
+	    <tr>
+	      <th>Date</th>
+	      <th>To</th>
+	      <th>Amount (MEDV)</th>
+	      <th>Status</th>
+	      <th>Signature</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @transactions.each do |tx| %>
+	      <tr>
+	        <td><%= tx.created_at.strftime("%d %b %Y, %I:%M %p") %></td>
+	        <td><%= tx.to_address.truncate(10) %></td>
+	        <td><%= tx.amount %></td>
+	        <td><%= tx.status.capitalize %></td>
+	        <td>
+	          <% if tx.tx_signature.present? %>
+	            <a href="https://explorer.solana.com/tx/<%= tx.tx_signature.strip %>?cluster=devnet" target="_blank">View</a>
+	          <% else %>
+	            N/A
+	          <% end %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+</div>

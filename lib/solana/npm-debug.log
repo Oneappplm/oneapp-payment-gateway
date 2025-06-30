@@ -1,0 +1,72 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/hp/.nvm/v0.8.28/bin/node',
+1 verbose cli   '/home/hp/.nvm/v0.8.28/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '@solana/web3.js',
+1 verbose cli   'bs58' ]
+2 info using npm@1.2.30
+3 info using node@v0.8.28
+4 verbose read json /home/hp/project/pawan/oneapp-payment-gateway/lib/solana/package.json
+5 warn package.json solana@0.0.0 No repository field.
+6 warn package.json solana@0.0.0 No readme data.
+7 verbose from cache /home/hp/project/pawan/oneapp-payment-gateway/lib/solana/package.json
+8 verbose readDependencies using package.json deps
+9 verbose cache add [ '@solana/web3.js', null ]
+10 verbose cache add name=undefined spec="@solana/web3.js" args=["@solana/web3.js",null]
+11 verbose parsed url { pathname: '@solana/web3.js',
+11 verbose parsed url   path: '@solana/web3.js',
+11 verbose parsed url   href: '@solana/web3.js' }
+12 verbose cache add name="" spec="solana/web3.js" args=["","solana/web3.js"]
+13 verbose parsed url { pathname: 'solana/web3.js',
+13 verbose parsed url   path: 'solana/web3.js',
+13 verbose parsed url   href: 'solana/web3.js' }
+14 verbose cache add [ 'bs58', null ]
+15 verbose cache add name=undefined spec="bs58" args=["bs58",null]
+16 verbose parsed url { pathname: 'bs58', path: 'bs58', href: 'bs58' }
+17 silly lockFile 36c9dc34-solana-web3-js solana/web3.js
+18 verbose lock solana/web3.js /home/hp/.npm/36c9dc34-solana-web3-js.lock
+19 silly lockFile f03ee596-bs58 bs58
+20 verbose lock bs58 /home/hp/.npm/f03ee596-bs58.lock
+21 info maybeGithub Attempting solana/web3.js from git://github.com/solana/web3.js
+22 silly lockFile c297dc37-git-github-com-solana-web3-js git://github.com/solana/web3.js
+23 verbose lock git://github.com/solana/web3.js /home/hp/.npm/c297dc37-git-github-com-solana-web3-js.lock
+24 silly lockFile f03ee596-bs58 bs58
+25 silly lockFile f03ee596-bs58 bs58
+26 verbose addRemoteGit [ 'git://github.com/solana/web3.js', 'master' ]
+27 verbose addNamed [ 'bs58', '' ]
+28 verbose addNamed [ null, '' ]
+29 silly lockFile f547a018-bs58 bs58@
+30 verbose lock bs58@ /home/hp/.npm/f547a018-bs58.lock
+31 silly addNameRange { name: 'bs58', range: '', hasData: false }
+32 verbose url raw bs58
+33 verbose url resolving [ 'https://registry.npmjs.org/', './bs58' ]
+34 verbose url resolved https://registry.npmjs.org/bs58
+35 info trying registry request attempt 1 at 16:32:55
+36 http GET https://registry.npmjs.org/bs58
+37 info retry will retry, error on last attempt: Error: 131970388979840:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:../deps/openssl/openssl/ssl/s23_clnt.c:658:
+38 info trying registry request attempt 2 at 16:33:05
+39 http GET https://registry.npmjs.org/bs58
+40 info retry will retry, error on last attempt: Error: 131970388979840:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:../deps/openssl/openssl/ssl/s23_clnt.c:658:
+41 info trying registry request attempt 3 at 16:34:06
+42 http GET https://registry.npmjs.org/bs58
+43 silly lockFile f547a018-bs58 bs58@
+44 silly lockFile f547a018-bs58 bs58@
+45 error Error: 131970388979840:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:../deps/openssl/openssl/ssl/s23_clnt.c:658:
+45 error
+45 error     at CleartextStream._puller (tls.js:670:24)
+45 error     at CleartextStream.CryptoStream._pull (tls.js:604:19)
+45 error     at SecurePair.cycle (tls.js:894:20)
+45 error     at EncryptedStream.CryptoStream.write (tls.js:285:13)
+45 error     at Socket.ondata (stream.js:38:26)
+45 error     at Socket.EventEmitter.emit (events.js:96:17)
+45 error     at TCP.onread (net.js:397:14)
+46 error If you need help, you may report this log at:
+46 error     <http://github.com/isaacs/npm/issues>
+46 error or email it to:
+46 error     <npm-@googlegroups.com>
+47 error System Linux 6.8.0-53-generic
+48 error command "/home/hp/.nvm/v0.8.28/bin/node" "/home/hp/.nvm/v0.8.28/bin/npm" "install" "@solana/web3.js" "bs58"
+49 error cwd /home/hp/project/pawan/oneapp-payment-gateway/lib/solana
+50 error node -v v0.8.28
+51 error npm -v 1.2.30
+52 verbose exit [ 1, true ]

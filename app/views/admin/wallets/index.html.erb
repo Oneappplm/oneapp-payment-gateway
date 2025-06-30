@@ -1,0 +1,55 @@
+<div class="container mt-5">
+	<h2 class="mb-4">🧾 Wallets Overview (Admin)</h2>
+	<table class="table table-bordered table-striped">
+	  <thead>
+	    <tr>
+	      <th>User</th>
+	      <th>Wallet Address</th>
+	      <th>Balance (MEDV)</th>
+	      <th>Last Updated</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @wallets.each do |wallet| %>
+	      <tr>
+	        <td><%= wallet.user.email %></td>
+	        <td><%= wallet.address %></td>
+	        <td><%= number_with_precision(wallet.balance, precision: 2) %></td>
+	        <td><%= wallet.updated_at.strftime('%Y-%m-%d %H:%M') %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+	<hr>
+
+	<h3 class="mt-5">🔄 Recent Top-Up Transactions</h3>
+
+	<table class="table table-bordered table-striped">
+	  <thead>
+	    <tr>
+	      <th>User</th>
+	      <th>Wallet</th>
+	      <th>USD</th>
+	      <th>MEDV</th>
+	      <th>Rate</th>
+	      <th>Status</th>
+	      <th>Timestamp</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @transactions.each do |tx| %>
+	      <% meta = tx.metadata.with_indifferent_access rescue {} %>
+	      <tr>
+	        <td><%= tx.wallet.user.email %></td>
+	        <td><%= tx.wallet.address %></td>
+	        <td>$<%= meta[:usd] %></td>
+	        <td><%= number_with_precision(tx.amount, precision: 2) %></td>
+	        <td>1 USD = <%= meta[:rate] %> MEDV</td>
+	        <td><%= tx.status %></td>
+	        <td><%= tx.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>

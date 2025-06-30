@@ -11,15 +11,34 @@ class PatientsController < ApplicationController
   end
 
   def create
-    @patient = @doctor.patients.new(patient_params)
-    # @patient.user = current_user
-    if @patient.save
-      redirect_to doctor_patients_path(@doctor), notice: "Patient added successfully."
-    else
-      # puts @patient.errors.full_messages
-      render :new, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      # 1. Create the user
+      generated_password = Devise.friendly_token.first(8)
+      user = User.create!(
+        email: params[:patient][:email_address],
+        password: generated_password,
+        password_confirmation: generated_password,
+        user_role: "patient"
+      )
+
+      # 2. Create the patient linked to the doctor and user
+      @patient = @doctor.patients.new(patient_params)
+      @patient.user = user
+
+      if @patient.save
+        # Optional: Send welcome email or password instructions
+        # UserMailer.with(user: user, password: generated_password).welcome_email.deliver_later
+        redirect_to doctor_patients_path(@doctor), notice: "Patient and user created successfully."
+      else
+        raise ActiveRecord::Rollback
+      end
     end
+  rescue ActiveRecord::RecordInvalid => e
+    flash.now[:alert] = "Failed to create patient: #{e.record.errors.full_messages.to_sentence}"
+    @patient ||= @doctor.patients.new(patient_params)
+    render :new, status: :unprocessable_entity
   end
+
 
   def show
     @patient = @doctor.patients.find(params[:id])

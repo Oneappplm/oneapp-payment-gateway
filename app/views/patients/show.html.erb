@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-3 mb-5">
   <div class="card shadow rounded-4">
     <div class="card-header bg-light rounded-top-4">
       <h3 class="mb-0">Patient Profile</h3>
@@ -84,7 +84,7 @@
           <p><%= @patient.last_visit_date&.strftime('%B %d, %Y') || "Not recorded." %></p>
         </div>
       </div>
-      <%= link_to 'Edit Profile', edit_doctor_patient_path(@doctor, @patient), class: "btn btn-primary mt-3" %>
+      <%= link_to 'Edit Patient Profile', edit_doctor_patient_path(@doctor, @patient), class: "btn btn-primary mt-3" %>
       <%= link_to "← Back to Patients", doctor_patients_path(@doctor), class: "btn btn-outline-primary mt-3" %>
 
       <%# if @invoices.present? %>

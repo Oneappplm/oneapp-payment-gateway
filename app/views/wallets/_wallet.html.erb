@@ -1,0 +1,16 @@
+<div class="container mt-3">
+	<% sol_balance = Solana::BalanceService.get_balance(current_user.wallet.address) rescue 0.0 %>
+	<% sol_usd = Solana::PriceService.sol_to_usd %>
+	<% balance_usd = (sol_balance * sol_usd).round(2) %>
+
+	<p><strong>User Name:</strong> <%= current_user.doctor.full_name %></p>
+  <p><strong>Address:</strong> <%= current_user.wallet.address %></p>
+  <p><strong>MEDV Balance:</strong> <%= current_user.wallet.balance %> MEDV</p>
+  <p><strong>SOL Balance:</strong> <%= sol_balance %> SOL (~<%= number_to_currency(balance_usd) %>)</p>
+
+  <% if sol_balance < 0.001 %>
+    <div class="alert alert-warning mt-2">
+      ⚠️ Warning: Low SOL balance. You may not be able to pay gas fees.
+    </div>
+  <% end %>
+</div>

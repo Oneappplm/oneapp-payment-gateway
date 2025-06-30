@@ -1,0 +1,2 @@
+class ConversionRate < ApplicationRecord
+end

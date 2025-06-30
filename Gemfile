@@ -77,3 +77,6 @@ gem 'lockbox' # For encrypted private keys
 gem 'dotenv-rails' # Optional for managing ENV keys
 gem 'sidekiq'
 gem 'rqrcode'
+gem 'rbnacl'
+gem 'base58'
+gem 'attr_encrypted'

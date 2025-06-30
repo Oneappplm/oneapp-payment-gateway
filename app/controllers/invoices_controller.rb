@@ -88,6 +88,14 @@ class InvoicesController < ApplicationController
 
 	end
 
+	def pay_with_medv
+	  invoice = Invoice.find(params[:id])
+	  Medv::TokenTransferService.new(invoice).call
+
+	  redirect_to [@doctor, @patient, @invoice], notice: "Payment successful"
+	end
+
+
 	private
 
 	def set_doctor
@@ -104,6 +112,6 @@ class InvoicesController < ApplicationController
 	end
 
 	def invoice_params
-    params.require(:invoice).permit(:service_name, :amount, :discount, :payment_method, :status, :appointment_id, :service_name, :service_description, :amount, :discount, :tax, :payment_method, :status, :appointment_id, :date_of_service, :due_date, :clinic_name)
+    params.require(:invoice).permit(:service_name, :amount, :discount, :payment_method, :status, :appointment_id, :service_name, :service_description, :amount, :discount, :tax, :payment_method, :status, :appointment_id, :date_of_service, :due_date, :clinic_name, :medv_token_amount)
   end
 end

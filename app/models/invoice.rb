@@ -5,6 +5,8 @@ class Invoice < ApplicationRecord
 
   has_one :card_payment, dependent: :destroy
 
+  encrypts :medv_token_amount
+
   enum status: {
     unpaid: 'Unpaid', 
     paid: 'Paid',

@@ -5,7 +5,7 @@ class HomeController < ApplicationController
       when "doctor"
         @display_name = current_user.doctor&.full_name
       when "patient"
-        @display_name = "Patient"  
+        @display_name = current_user.patient&.full_name
       end
     end
   end

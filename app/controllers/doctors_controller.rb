@@ -1,11 +1,11 @@
 class DoctorsController < ApplicationController
 
-  def index
-    # @doctors = Doctor.all
-    if current_user&.user_role == "doctor"
-      @doctor = current_user.doctor
-    end
-  end
+  # def index
+  #   # @doctors = Doctor.all
+  #   if current_user&.user_role == "doctor"
+  #     @doctor = current_user.doctor
+  #   end
+  # end
 
   def new
     @doctor = Doctor.new

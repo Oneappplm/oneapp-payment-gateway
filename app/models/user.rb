@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable
 
   has_one :doctor
-  # has_one :patient
+  has_one :patient, dependent: :destroy
   has_many :appointments, foreign_key: :patient_id
 
   has_one :wallet, dependent: :destroy
