@@ -16,7 +16,7 @@
 		      <tr>
 		        <td><%= patient.full_name %></td>
 		        <td><%= patient.dob %></td>
-		        <td><%= patient.status.titleize rescue 'N/A' %></td>
+		        <td><%= patient.active? ? 'Active' : 'Inactive' %></td>
 		        <td>
 		        	<%= link_to doctor_patient_path(@doctor, patient), 
 		        			class: "btn btn-sm btn-primary" do %>

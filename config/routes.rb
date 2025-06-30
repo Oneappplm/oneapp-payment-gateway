@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :doctors, only: [:new, :create, :show, :edit, :update] do
-    resources :appointments, only: [:index, :show]  # Doctor’s view of appointments
+    resources :appointments, only: [:index, :show]
+    resources :invoices, only: [:index, :new, :create, :show]
 
     resources :patients, only: [:index, :new, :create, :show, :edit, :update] do
       resources :appointments, only: [:new, :create, :show] # Patient scheduling appointment

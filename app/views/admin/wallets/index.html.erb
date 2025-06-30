@@ -5,7 +5,7 @@
 	    <tr>
 	      <th>User</th>
 	      <th>Wallet Address</th>
-	      <th>Balance (MEDV)</th>
+	      <!-- <th>Balance (MEDV)</th> -->
 	      <th>Last Updated</th>
 	    </tr>
 	  </thead>
@@ -14,7 +14,7 @@
 	      <tr>
 	        <td><%= wallet.user.email %></td>
 	        <td><%= wallet.address %></td>
-	        <td><%= number_with_precision(wallet.balance, precision: 2) %></td>
+	        <!-- <td><%#= number_with_precision(wallet.balance, precision: 2) %></td> -->
 	        <td><%= wallet.updated_at.strftime('%Y-%m-%d %H:%M') %></td>
 	      </tr>
 	    <% end %>
@@ -30,26 +30,58 @@
 	    <tr>
 	      <th>User</th>
 	      <th>Wallet</th>
-	      <th>USD</th>
+	      <!-- <th>USD</th> -->
 	      <th>MEDV</th>
 	      <th>Rate</th>
 	      <th>Status</th>
 	      <th>Timestamp</th>
+	      <th></th>
 	    </tr>
 	  </thead>
-	  <tbody>
-	    <% @transactions.each do |tx| %>
-	      <% meta = tx.metadata.with_indifferent_access rescue {} %>
-	      <tr>
-	        <td><%= tx.wallet.user.email %></td>
-	        <td><%= tx.wallet.address %></td>
-	        <td>$<%= meta[:usd] %></td>
-	        <td><%= number_with_precision(tx.amount, precision: 2) %></td>
-	        <td>1 USD = <%= meta[:rate] %> MEDV</td>
-	        <td><%= tx.status %></td>
-	        <td><%= tx.created_at.strftime('%Y-%m-%d %H:%M') %></td>
-	      </tr>
-	    <% end %>
-	  </tbody>
+	  <% sol_balance = Solana::BalanceService.get_balance(current_user.wallet.address) rescue 0.0 %>
+		<% sol_usd = Solana::PriceService.sol_to_usd %>
+		<% balance_usd = (sol_balance * sol_usd).round(2) %>
+
+		<tbody>
+		  <% @transactions.each do |tx| %>
+		    <% meta = tx.metadata.with_indifferent_access rescue {} %>
+		    <tr>
+		      <td><%= tx.wallet.user.email %></td>
+		      <td><%= tx.wallet.address %></td>
+		      <!-- <td>$<%#= meta[:usd] %></td> -->
+		      <td><%= number_with_precision(tx.amount, precision: 2) %></td>
+		      <td><%= sol_balance %> SOL (~<%= number_to_currency(balance_usd) %>)</td>
+		      
+		      <td>
+					  <% status = tx.status.to_s.downcase %>
+					  <% status_class = status == "success" ? "badge bg-success" : "badge bg-danger" %>
+					  <span class="<%= status_class %>"><%= status.capitalize.presence || "NA" %></span>
+					</td>
+
+
+		      <td><%= tx.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+		      <td>
+		        <% if tx.tx_signature.present? && tx.status == "success" %>
+		          <%= link_to "View on Solana Explorer", "https://explorer.solana.com/tx/#{tx.tx_signature}?cluster=devnet", target: "_blank", rel: "noopener", class: 'text-decoration-none' %>
+		        <% end %>
+		      </td>
+		    </tr>
+		  <% end %>
+		</tbody>
 	</table>
+	<% if @transactions %>
+		<div class="col-lg-12 mt-3 mb-3 bg-light">
+		  <div class="d-flex justify-content-between align-items-center p-3 border rounded">
+		    <div class="page_info text-dark">
+		      <%= page_entries_info @transactions %>
+		    </div>
+		    
+		    <% if params[:per_page].present? %>
+		      <%= will_paginate @transactions, params: { per_page: @per_page }, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, class: 'pagination mb-0' %>
+		    <% else %>
+		      <%= will_paginate @transactions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, class: 'pagination mb-0' %>
+		    <% end %>
+		  </div>
+		</div>
+	<% end %>
 </div>

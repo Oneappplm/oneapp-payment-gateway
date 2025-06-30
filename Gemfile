@@ -80,3 +80,7 @@ gem 'rqrcode'
 gem 'rbnacl'
 gem 'base58'
 gem 'attr_encrypted'
+gem "letter_opener"
+gem 'mini_magick'
+gem 'will_paginate-bootstrap-style'
+gem 'will_paginate', '~> 3.3'

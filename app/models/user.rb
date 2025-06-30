@@ -10,7 +10,8 @@ class User < ApplicationRecord
 
   has_one :wallet, dependent: :destroy
 
-  enum user_role: { doctor: 'doctor', patient: 'patient', admin: 'admin' }
+  # enum user_role: { doctor: 'doctor', patient: 'patient', admin: 'admin' }
+  enum user_role: { doctor: 'doctor', patient: 'patient' }
 
   #validates :user_role, presence: true, inclusion: { in: %w[doctor patient] }
 end

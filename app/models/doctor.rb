@@ -6,6 +6,8 @@ class Doctor < ApplicationRecord
 
   has_one_attached :profile_picture
 
+  accepts_nested_attributes_for :user
+
   # validates :email, presence: true, uniqueness: true
 
   def full_name

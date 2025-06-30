@@ -22,7 +22,7 @@
 	          <td><%= @doctor.last_name %></td>
 	          <td><%= @doctor.specialty %></td>
 	          <td><%= @doctor.license_number %></td>
-	          <td><%= @doctor.email %></td>
+	          <td><%= @doctor.user&.email %></td>
 	          <td><%= @doctor.phone %></td>
 	          <td><%= @doctor.clinic_name %></td>
 	          <td>

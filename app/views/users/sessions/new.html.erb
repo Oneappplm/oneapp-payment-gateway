@@ -13,6 +13,8 @@
             <%= f.password_field :password, autocomplete: "current-password", class: 'form-control' %>
           </div>
 
+          <%= f.hidden_field :user_role, value: "patient" %>
+
           <%# if devise_mapping.rememberable? %>
             <div class="field mt-2 mb-2">
               <%#= f.check_box :remember_me %>

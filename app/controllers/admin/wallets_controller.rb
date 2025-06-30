@@ -4,7 +4,7 @@ class Admin::WalletsController < ApplicationController
 
   def index
     @wallets = Wallet.includes(:user).all
-    @transactions = WalletTransaction.includes(:wallet).order(created_at: :desc).limit(50)
+    @transactions = WalletTransaction.includes(:wallet).order(created_at: :desc).paginate(per_page: 10, page: params[:page] || 1)
   end
 
   private

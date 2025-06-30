@@ -23,26 +23,28 @@
         </li>
 
         <li>
-          <% if current_user && current_user.doctor %>
+          <% if current_user&.doctor.present? %>
             <%= link_to 'My Invoices', doctor_invoices_path(current_user.doctor), class: 'nav-link active' %>
-          <% end %>
-        </li>
-
-         <li>
-          <% if current_user && current_user.doctor %>
-            <%= link_to 'Audit Logs', admin_audit_logs_path, class: 'nav-link active' %>
+          <% elsif current_user&.patient.present? %>
+            <%= link_to 'My Invoices', doctor_patient_invoices_path(current_user.patient.doctor, current_user.patient), class: 'nav-link active' %>
           <% end %>
         </li>
 
         <li>
-           <% if current_user.present? %>
+          <% if current_user && current_user.wallet.present? && (current_user.doctor || current_user.patient) %>
             <%= link_to 'My Wallet', wallet_path(current_user.wallet), class: 'nav-link active' %>
           <% end %>
         </li>
 
         <li>
-          <% if current_user.present? %>
+          <% if current_user && current_user.doctor %>
             <%= link_to 'Wallet Transactions', admin_wallets_path, class: 'nav-link active' %>
+          <% end %>
+        </li>
+
+        <li>
+          <% if current_user && current_user.doctor %>
+            <%= link_to 'Audit Logs', admin_audit_logs_path, class: 'nav-link active' %>
           <% end %>
         </li>
 

@@ -4,8 +4,16 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show]
 
 	def index
-	  @invoices = @doctor.invoices.includes(:patient)
+	  if params[:patient_id]
+	    @patient = Patient.find(params[:patient_id])
+	    @doctor = Doctor.find(params[:doctor_id])
+	    @invoices = @patient.invoices.includes(:doctor)
+	  else
+	    @doctor = Doctor.find(params[:doctor_id])
+	    @invoices = @doctor.invoices.includes(:patient)
+	  end
 	end
+
 
 	def new
 		@invoice = @patient.invoices.new
@@ -99,7 +107,7 @@ class InvoicesController < ApplicationController
 	private
 
 	def set_doctor
-		@doctor = current_user.doctor
+		@doctor = Doctor.find_by(id: params[:doctor_id])
 	end
 
 	def set_patient

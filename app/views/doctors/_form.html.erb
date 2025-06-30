@@ -24,10 +24,12 @@
   </div>
 
   <div class="row">
-  	<div class="form-group col-lg-6 mt-2 mb-2">
-	  	<%= form.label :email %>
-	  	<%= form.email_field :email, placeholder: "Email Address", class: 'form-control border-dark', autocomplete: "off" %>
-	  </div>
+  	<%= form.fields_for :user do |u| %>
+		  <div class="form-group col-lg-6 mt-2 mb-2">
+		    <%= u.label :email %>
+		    <%= u.email_field :email, class: 'form-control border-dark' %>
+		  </div>
+		<% end %>
 
 	  <div class="form-group col-lg-6 mt-2 mb-2">
 	  	<%= form.label :phone %>
@@ -47,13 +49,19 @@
 	  </div>
   </div>
 
-  <div class="form-group col-lg-6 mt-2 mb-2">
-  	<%= form.label :location %>
-  	<%= form.text_field :location, placeholder: "Location", class: 'form-control border-dark', autocomplete: "off" %>
+  <div class="row">
+  	<div class="form-group col-lg-6 mt-2 mb-2">
+	  	<%= form.label :location %>
+	  	<%= form.text_field :location, placeholder: "Location", class: 'form-control border-dark', autocomplete: "off" %>
+	  </div>
+		  <%#= form.password_field :password %>
+		  <%#= form.password_field :password_confirmation %>
+		  
+		 <div class="form-group col-lg-6 mt-2 mb-2">
+		 	<%= form.label :profile_picture %>
+		 	<%= form.file_field :profile_picture, class: 'form-control border-dark' %>
+		 </div>
   </div>
-  <%#= form.password_field :password %>
-  <%#= form.password_field :password_confirmation %>
-  <%#= form.file_field :profile_picture %>
 
   <div>
   	<%= form.submit class: 'btn btn-primary mt-2' %>

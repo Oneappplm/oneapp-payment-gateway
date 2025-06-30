@@ -14,12 +14,12 @@
           <strong>Date of Birth:</strong>
           <p><%= @patient.dob.strftime('%B %d, %Y') %></p>
         </div>
-        <% if @patient.status.present? %>
+        <% if @patient.active? ? 'Active' : 'Inactive' %>
           <div class="col-md-6">
             <strong>Status:</strong>
             <p>
               <span class="badge bg-<%= @patient.active? ? 'success' : 'secondary' %>">
-                <%= @patient.status.to_s.titleize %>
+                <%= @patient.active? ? 'Active' : 'Inactive' %>
               </span>
             </p>
           </div>

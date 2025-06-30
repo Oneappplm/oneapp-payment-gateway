@@ -61,8 +61,8 @@
                <strong>Paid At:</strong> <%= @invoice.card_payment.paid_at.strftime("%Y-%m-%d %H:%M") %> 
               </li>
             </ul>
-          <% else %>
-            <p>No card payment details found.</p>
+          <%# else %>
+            <!-- <p>No card payment details found.</p> -->
           <% end %>
         </div>
       </div>

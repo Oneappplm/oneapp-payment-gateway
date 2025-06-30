@@ -26,6 +26,9 @@ class PatientsController < ApplicationController
       @patient.user = user
 
       if @patient.save
+        if params[:send_credentials].present?
+          user.send_reset_password_instructions
+        end
         # Optional: Send welcome email or password instructions
         # UserMailer.with(user: user, password: generated_password).welcome_email.deliver_later
         redirect_to doctor_patients_path(@doctor), notice: "Patient and user created successfully."
