@@ -378,7 +378,6 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
-  will_paginate (~> 3.3)
   will_paginate-bootstrap-style
 
 RUBY VERSION

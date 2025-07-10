@@ -31,15 +31,15 @@
         </li>
 
         <li>
-          <% if current_user && current_user.wallet.present? && (current_user.doctor || current_user.patient) %>
-            <%= link_to 'My Wallet', wallet_path(current_user.wallet), class: 'nav-link active' %>
-          <% end %>
+          <%# if current_user && current_user.wallet.present? && (current_user.doctor || current_user.patient) %>
+            <%#= link_to 'My Wallet', wallet_path(current_user.wallet), class: 'nav-link active' %>
+          <%# end %>
         </li>
 
         <li>
-          <% if current_user && current_user.doctor %>
-            <%= link_to 'Wallet Transactions', admin_wallets_path, class: 'nav-link active' %>
-          <% end %>
+          <%# if current_user && current_user.doctor %>
+            <%#= link_to 'Wallet Transactions', admin_wallets_path, class: 'nav-link active' %>
+          <%# end %>
         </li>
 
         <li>
