@@ -13,5 +13,8 @@ class User < ApplicationRecord
   # enum user_role: { doctor: 'doctor', patient: 'patient', admin: 'admin' }
   enum user_role: { doctor: 'doctor', patient: 'patient' }
 
+  accepts_nested_attributes_for :doctor
+  accepts_nested_attributes_for :patient
+
   #validates :user_role, presence: true, inclusion: { in: %w[doctor patient] }
 end

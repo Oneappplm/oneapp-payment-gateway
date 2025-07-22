@@ -1,12 +1,37 @@
 Rails.application.routes.draw do
+  
+  root 'home#index'
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
 
-  root 'home#index'
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
 
-  resources :doctors, only: [:new, :create, :show, :edit, :update] do
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:create]
+      resources :doctors do
+        resources :patients do
+          resources :invoices
+        end
+      end
+    end
+  end
+
+
+  # namespace :api do
+  #   namespace :v1 do
+  #     resources :doctors
+  #     resources :patients
+  #     post 'users', to: 'registrations#create'
+  #   end
+  # end
+
+
+  resources :doctors, only: [:index, :new, :create, :show, :edit, :update] do
     resources :appointments, only: [:index, :show]
     resources :invoices, only: [:index, :new, :create, :show]
 

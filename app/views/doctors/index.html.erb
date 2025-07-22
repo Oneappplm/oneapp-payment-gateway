@@ -15,21 +15,21 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-	      <%# @doctors.each do |doctor| %>
+	      <% @doctors.each do |doctor| %>
 	        <tr>
-	          <td><%= @doctor.id %></td>
-	          <td><%= @doctor.first_name %></td>
-	          <td><%= @doctor.last_name %></td>
-	          <td><%= @doctor.specialty %></td>
-	          <td><%= @doctor.license_number %></td>
-	          <td><%= @doctor.user&.email %></td>
-	          <td><%= @doctor.phone %></td>
-	          <td><%= @doctor.clinic_name %></td>
+	          <td><%= doctor.id %></td>
+	          <td><%= doctor.first_name %></td>
+	          <td><%= doctor.last_name %></td>
+	          <td><%= doctor.specialty %></td>
+	          <td><%= doctor.license_number %></td>
+	          <td><%= doctor.user&.email %></td>
+	          <td><%= doctor.phone %></td>
+	          <td><%= doctor.clinic_name %></td>
 	          <td>
-	            <%= link_to 'Show', doctor_path(@doctor), class: "btn btn-sm btn-primary" %>
+	            <%= link_to 'Show', doctor_path(doctor), class: "btn btn-sm btn-primary" %>
 	          </td>
 	        </tr>
-	      <%# end %>
+	      <% end %>
 	    </tbody>
 	  </table>
   </div>
