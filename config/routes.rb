@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create]
       resources :doctors do
+        resources :invoices
+        
         resources :patients do
           resources :invoices
         end
@@ -47,7 +49,7 @@ Rails.application.routes.draw do
       resources :appointments, only: [:new, :create, :show]
     end
 
-    resources :invoices, only: [:index, :show]
+    # resources :invoices, only: [:index, :show]
   end
 
   # resources :patients, only: [:index, :new, :create, :show, :edit, :update]

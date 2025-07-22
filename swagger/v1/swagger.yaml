@@ -56,81 +56,99 @@ paths:
               properties:
                 phone:
                   type: string
-  "/api/v1/invoices":
+  "/api/v1/doctors/{doctor_id}/invoices":
+    parameters:
+    - name: doctor_id
+      in: path
+      required: true
+      schema:
+        type: string
     get:
-      summary: list invoices
+      summary: List invoices
       tags:
       - Invoices
       responses:
         '200':
           description: successful
+  "/api/v1/doctors/{doctor_id}/patients/{patient_id}/invoices":
+    parameters:
+    - name: doctor_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: patient_id
+      in: path
+      required: true
+      schema:
+        type: string
     post:
-      summary: create invoice
+      summary: Create invoice
       tags:
       - Invoices
       parameters: []
       responses:
         '201':
           description: created
+        '422':
+          description: unprocessable entity
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                doctor_id:
-                  type: integer
-                patient_id:
-                  type: integer
                 service_name:
                   type: string
+                service_description:
+                  type: text
                 amount:
                   type: number
                 discount:
-                  type: number
-                tax:
-                  type: number
-                payment_method:
+                  type: decimal
+                clinic_name:
                   type: string
-                status:
-                  type: string
-                conversion_rate:
-                  type: number
-                blockchain_network:
-                  type: integer
-                sender_wallet_address:
-                  type: string
-                receiver_wallet_address:
-                  type: string
+                date_of_service:
+                  type: date
+                due_date:
+                  type: date
               required:
-              - doctor_id
-              - patient_id
               - service_name
+              - service_description
               - amount
-  "/api/v1/invoices/{id}":
+              - discount
+              - clinic_name
+              - date_of_service
+              - due_date
+  "/api/v1/doctors/{doctor_id}/patients/{patient_id}/invoices/{id}":
+    parameters:
+    - name: doctor_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: patient_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
     get:
-      summary: show invoice
+      summary: Show invoice
       tags:
       - Invoices
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
       responses:
         '200':
-          description: found
-    patch:
-      summary: update invoice
+          description: successful
+    put:
+      summary: Update invoice
       tags:
       - Invoices
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters: []
       responses:
         '200':
           description: updated
@@ -140,10 +158,19 @@ paths:
             schema:
               type: object
               properties:
-                status:
+                amount:
+                  type: number
+                service_name:
                   type: string
-                solana_signature:
-                  type: string
+                service_description:
+                  type: text
+    delete:
+      summary: Delete invoice
+      tags:
+      - Invoices
+      responses:
+        '204':
+          description: deleted
   "/api/v1/doctors/{doctor_id}/patients":
     get:
       summary: list patients

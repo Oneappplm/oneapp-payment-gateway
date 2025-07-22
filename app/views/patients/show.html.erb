@@ -12,7 +12,7 @@
       <div class="row mb-3">
         <div class="col-md-6">
           <strong>Date of Birth:</strong>
-          <p><%= @patient.dob.strftime('%B %d, %Y') %></p>
+          <p><%= @patient.dob&.strftime('%B %d, %Y') %></p>
         </div>
         <% if @patient.active? ? 'Active' : 'Inactive' %>
           <div class="col-md-6">
