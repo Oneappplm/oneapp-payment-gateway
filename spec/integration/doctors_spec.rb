@@ -11,44 +11,6 @@ RSpec.describe 'api/v1/doctors', type: :request do
         run_test!
       end
     end
-
-    # post('create doctor') do
-    #   tags 'Doctors'
-    #   consumes 'application/json'
-    #   parameter name: :doctor, in: :body, schema: {
-    #     type: :object,
-    #     properties: {
-    #       first_name: { type: :string },
-    #       last_name: { type: :string },
-    #       specialty: { type: :string },
-    #       license_number: { type: :string },
-    #       email: { type: :string },
-    #       phone: { type: :string },
-    #       clinic_name: { type: :string },
-    #       clinic_address: { type: :string },
-    #       location: { type: :string },
-    #       user_id: { type: :integer }
-    #     },
-    #     required: ['first_name', 'last_name', 'email', 'user_id']
-    #   }
-
-    #   response(201, 'created') do
-    #     let(:doctor) do
-    #       {
-    #         first_name: 'Alice',
-    #         last_name: 'Smith',
-    #         specialty: 'Cardiology',
-    #         email: 'alice@example.com',
-    #         phone: '1234567890',
-    #         clinic_name: 'Heart Care',
-    #         clinic_address: '456 Lane',
-    #         location: 'NY',
-    #         user_id: 1
-    #       }
-    #     end
-    #     run_test!
-    #   end
-    # end
   end
 
   path '/api/v1/doctors/{id}' do

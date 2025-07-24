@@ -417,9 +417,9 @@ DEPENDENCIES
   rqrcode
   rspec-rails
   rswag
-  rswag-api
-  rswag-specs
-  rswag-ui
+  rswag-api (~> 2.4)
+  rswag-specs (~> 2.4)
+  rswag-ui (~> 2.4)
   selenium-webdriver
   sidekiq
   sprockets-rails

@@ -32,16 +32,6 @@ RSpec.describe 'api/v1/doctors/:doctor_id/patients', type: :request do
       parameter name: :patient, in: :body, schema: {
         type: :object,
         properties: {
-          # user: {
-          #   type: :object,
-          #   properties: {
-          #     email: { type: :string },
-          #     password: { type: :string },
-          #     password_confirmation: { type: :string },
-          #     user_role: { type: :string, enum: ['patient'] }
-          #   },
-          #   required: ['email', 'password', 'password_confirmation', 'user_role']
-          # },
           patient: {
             type: :object,
             properties: {
