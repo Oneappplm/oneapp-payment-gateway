@@ -12,12 +12,16 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:create]
-      resources :doctors do
-        resources :invoices
-        
-        resources :patients do
+      namespace :admin do
+        resources :audit_logs, only: [:index]
+        post 'users/register', to: 'users#create'
+        resources :users
+        resources :doctors do
           resources :invoices
+
+          resources :patients do
+            resources :invoices
+          end
         end
       end
     end

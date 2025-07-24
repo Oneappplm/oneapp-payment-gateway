@@ -1,6 +1,6 @@
 class Patient < ApplicationRecord
   belongs_to :user
-  belongs_to :doctor
+  belongs_to :doctor, optional: true
   has_many :invoices, dependent: :destroy
   # has_many :appointments, dependent: :destroy
 

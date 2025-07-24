@@ -172,6 +172,13 @@ paths:
         '204':
           description: deleted
   "/api/v1/doctors/{doctor_id}/patients":
+    parameters:
+    - name: doctor_id
+      in: path
+      description: Doctor ID
+      required: true
+      schema:
+        type: string
     get:
       summary: list patients
       tags:
@@ -204,12 +211,19 @@ paths:
                       type: string
                     phone_number:
                       type: string
+                    email_address:
+                      type: string
                   required:
                   - first_name
                   - last_name
                   - phone_number
   "/api/v1/doctors/{doctor_id}/patients/{id}":
     parameters:
+    - name: doctor_id
+      in: path
+      required: true
+      schema:
+        type: string
     - name: id
       in: path
       required: true
@@ -253,14 +267,21 @@ paths:
         '204':
           description: deleted
   "/api/v1/users":
+    get:
+      summary: list users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
     post:
-      summary: create user
+      summary: Register a user
       tags:
       - Users
       parameters: []
       responses:
         '201':
-          description: created
+          description: user created
         '422':
           description: invalid request
       requestBody:
@@ -268,84 +289,100 @@ paths:
           application/json:
             schema:
               type: object
-              required:
-              - user
               properties:
                 user:
                   type: object
-                  required:
-                  - email
-                  - password
-                  - password_confirmation
-                  - user_role
                   properties:
                     email:
                       type: string
-                      format: email
                     password:
                       type: string
-                      format: password
                     password_confirmation:
                       type: string
-                      format: password
                     user_role:
                       type: string
                       enum:
                       - doctor
                       - patient
-                  oneOf:
-                  - required:
-                    - doctor_attributes
-                    properties:
-                      doctor_attributes:
-                        type: object
-                        required:
-                        - first_name
-                        - last_name
-                        - phone
-                        - license_number
-                        properties:
-                          first_name:
-                            type: string
-                          last_name:
-                            type: string
-                          email:
-                            type: string
-                          phone:
-                            type: string
-                          specialty:
-                            type: string
-                          license_number:
-                            type: string
-                          clinic_name:
-                            type: string
-                          clinic_address:
-                            type: string
-                          location:
-                            type: string
-                          profile_picture:
-                            type: string
-                            format: binary
-                  - required:
-                    - patient_attributes
-                    properties:
-                      patient_attributes:
-                        type: object
-                        required:
-                        - first_name
-                        - last_name
-                        - phone_number
-                        - dob
-                        properties:
-                          first_name:
-                            type: string
-                          last_name:
-                            type: string
-                          phone_number:
-                            type: string
-                          dob:
-                            type: string
-                            format: date
+                  required:
+                  - email
+                  - password
+                  - password_confirmation
+                  - user_role
+                doctor:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    specialty:
+                      type: string
+                    email:
+                      type: string
+                    phone:
+                      type: string
+                    clinic_name:
+                      type: string
+                    clinic_address:
+                      type: string
+                    location:
+                      type: string
+                patient:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    phone_number:
+                      type: string
+                    dob:
+                      type: string
+                      format: date
+  "/api/v1/users/{id}":
+    get:
+      summary: show user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: found
+  "/api/v1/admin/audit_logs":
+    get:
+      summary: list audit logs
+      tags:
+      - Admin Audit Logs
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    created_at:
+                      type: string
+                      format: date_time
+                    action:
+                      type: string
+                    action_type:
+                      type: string
+                    details:
+                      type: string
+                  required:
+                  - created_at
+                  - action
+                  - action_type
+                  - details
 servers:
 - url: http://localhost:3000
   description: Local server

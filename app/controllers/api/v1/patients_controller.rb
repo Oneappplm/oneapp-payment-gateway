@@ -7,14 +7,17 @@ class Api::V1::PatientsController < ApplicationController
     render json: patients, status: :ok
   end
 
-  def show
-    patient = @doctor.patients.find(params[:id])
-    render json: patient, serializer: PatientSerializer
-  end
-
   def create
+    generated_password = Devise.friendly_token.first(8)
+    user = User.create!(
+      email: params[:patient][:email_address],
+      password: generated_password,
+      password_confirmation: generated_password,
+      user_role: "patient"
+    )
+
     @patient = @doctor.patients.new(patient_params.except(:email_address))
-    @patient.user = current_user
+    @patient.user = user
 
     if @patient.save
       render json: @patient, serializer: PatientSerializer, status: :created
@@ -23,14 +26,10 @@ class Api::V1::PatientsController < ApplicationController
     end
   end
 
-  # def create
-  #   patient = Patient.new(patient_params)
-  #   if patient.save
-  #     render json: patient, serializer: PatientSerializer, status: :created
-  #   else
-  #     render json: { errors: patient.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
+  def show
+    patient = @doctor.patients.find(params[:id])
+    render json: patient, serializer: PatientSerializer
+  end
 
   def update
     patient = @doctor.patients.find(params[:id])
@@ -53,8 +52,15 @@ class Api::V1::PatientsController < ApplicationController
   private
 
   def set_doctor
-    @doctor = current_user.doctor
+    @doctor = if current_user&.doctor
+                current_user.doctor
+              else
+                Doctor.find_by(id: params[:doctor_id])
+              end
+
+    render json: { error: "Doctor not found" }, status: :not_found unless @doctor
   end
+
 
   def patient_params
     params.require(:patient).permit(

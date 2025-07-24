@@ -7,7 +7,7 @@ RSpec.describe 'api/v1/doctors/:doctor_id/patients', type: :request do
   let(:Authorization) { "Bearer #{auth_token}" }
 
   path '/api/v1/doctors/{doctor_id}/patients' do
-    # parameter name: :doctor_id, in: :path, type: :string, description: 'Doctor ID'
+    parameter name: :doctor_id, in: :path, type: :string, description: 'Doctor ID'
     # parameter name: 'Authorization', in: :header, type: :string, required: true
 
     get('list patients') do
@@ -47,7 +47,8 @@ RSpec.describe 'api/v1/doctors/:doctor_id/patients', type: :request do
             properties: {
               first_name: { type: :string },
               last_name: { type: :string },
-              phone_number: { type: :string }
+              phone_number: { type: :string },
+              email_address: { type: :string }
             },
             required: ['first_name', 'last_name', 'phone_number']
           }
@@ -99,7 +100,7 @@ RSpec.describe 'api/v1/doctors/:doctor_id/patients', type: :request do
   end
 
   path '/api/v1/doctors/{doctor_id}/patients/{id}' do
-    # parameter name: :doctor_id, in: :path, type: :string
+    parameter name: :doctor_id, in: :path, type: :string
     parameter name: :id, in: :path, type: :string
     # parameter name: 'Authorization', in: :header, type: :string, required: true
 

@@ -25,7 +25,7 @@
         <li>
           <% if current_user&.doctor.present? %>
             <%= link_to 'My Invoices', doctor_invoices_path(current_user.doctor), class: 'nav-link active' %>
-          <% elsif current_user&.patient.present? %>
+          <% elsif current_user&.patient.present? && current_user.patient.doctor.present? %>
             <%= link_to 'My Invoices', doctor_patient_invoices_path(current_user.patient.doctor, current_user.patient), class: 'nav-link active' %>
           <% end %>
         </li>

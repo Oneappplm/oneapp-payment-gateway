@@ -1,62 +1,44 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  skip_before_action :verify_authenticity_token
   before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_account_update_params, only: [:update]
 
   def create
     super do |user|
       if user.persisted?
-        if user.user_role == "doctor"
-          doctor_params = params.require(:doctor).permit(
-            :first_name, :last_name, :specialty, :license_number,
-            :email, :phone, :clinic_name, :clinic_address,
-            :location, :profile_picture
+        case user.user_role
+        when "doctor"
+          user.build_doctor(
+            first_name: params[:doctor][:first_name],
+            last_name: params[:doctor][:last_name],
+            specialty: params[:doctor][:specialty],
+            license_number: params[:doctor][:license_number],
+            email: params[:doctor][:email],
+            phone: params[:doctor][:phone],
+            clinic_name: params[:doctor][:clinic_name],
+            clinic_address: params[:doctor][:clinic_address],
+            location: params[:doctor][:location],
+            email_verified: false,
+            phone_verified: false,
+            license_verified: false,
+            profile_picture: params[:doctor][:profile_picture]
           )
-          user.create_doctor(doctor_params)
-        elsif user.user_role == "patient"
-          patient_params = params.require(:patient).permit(
-            :first_name, :last_name, :phone_number, :dob
+          user.doctor.save
+        when "patient"
+          user.build_patient(
+            first_name: params[:patient][:first_name],
+            last_name: params[:patient][:last_name],
+            phone_number: params[:patient][:phone_number],
+            dob: params[:patient][:dob],
+            address: "Not provided"
           )
-          user.create_patient(patient_params.merge(address: "Not provided"))
+          user.patient.save
         end
       end
     end
   end
-
-  # def create
-  #   super do |user|
-  #     if user.persisted?
-  #       case user.user_role
-  #       when "doctor"
-  #         user.build_doctor(
-  #           first_name: params[:doctor][:first_name],
-  #           last_name: params[:doctor][:last_name],
-  #           specialty: params[:doctor][:specialty],
-  #           license_number: params[:doctor][:license_number],
-  #           email: params[:doctor][:email],
-  #           phone: params[:doctor][:phone],
-  #           clinic_name: params[:doctor][:clinic_name],
-  #           clinic_address: params[:doctor][:clinic_address],
-  #           location: params[:doctor][:location],
-  #           email_verified: false,
-  #           phone_verified: false,
-  #           license_verified: false,
-  #           profile_picture: params[:doctor][:profile_picture]
-  #         )
-  #         user.doctor.save
-  #       when "patient"
-  #         user.build_patient(
-  #           first_name: params[:patient][:first_name],
-  #           last_name: params[:patient][:last_name],
-  #           phone_number: params[:patient][:phone_number],
-  #           dob: params[:patient][:dob],
-  #           address: "Not provided"
-  #         )
-  #         user.patient.save
-  #       end
-  #     end
-  #   end
-  # end
 
   private
 

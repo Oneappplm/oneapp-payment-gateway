@@ -1,99 +1,111 @@
 # spec/integration/users_spec.rb
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/users', type: :request do
+RSpec.describe '/api/v1/users/register', type: :request do
   path '/api/v1/users' do
-    post('create user') do
+    get('list users') do
+      tags 'Users'
+      produces 'application/json'
+
+      response(200, 'successful') do
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/users' do
+    post 'Register a user' do
       tags 'Users'
       consumes 'application/json'
-
       parameter name: :user, in: :body, schema: {
         type: :object,
-        required: ['user'],
         properties: {
           user: {
             type: :object,
-            required: ['email', 'password', 'password_confirmation', 'user_role'],
             properties: {
-              email: { type: :string, format: :email },
-              password: { type: :string, format: :password },
-              password_confirmation: { type: :string, format: :password },
-              user_role: { type: :string, enum: ['doctor', 'patient'] },
-              # Optional common user fields can go here
+              email: { type: :string },
+              password: { type: :string },
+              password_confirmation: { type: :string },
+              user_role: { type: :string, enum: ['doctor', 'patient'] }
             },
-            oneOf: [
-              {
-                required: ['doctor_attributes'],
-                properties: {
-                  doctor_attributes: {
-                    type: :object,
-                    required: ['first_name', 'last_name', 'phone', 'license_number'],
-                    properties: {
-                      first_name: { type: :string },
-                      last_name: { type: :string },
-                      email: { type: :string },
-                      phone: { type: :string },
-                      specialty: { type: :string },
-                      license_number: { type: :string },
-                      clinic_name: { type: :string },
-                      clinic_address: { type: :string },
-                      location: { type: :string },
-                      profile_picture: { type: :string, format: :binary }
-                    }
-                  }
-                }
-              },
-              {
-                required: ['patient_attributes'],
-                properties: {
-                  patient_attributes: {
-                    type: :object,
-                    required: ['first_name', 'last_name', 'phone_number', 'dob'],
-                    properties: {
-                      first_name: { type: :string },
-                      last_name: { type: :string },
-                      phone_number: { type: :string },
-                      dob: { type: :string, format: :date }
-                    }
-                  }
-                }
-              }
-            ]
+            required: %w[email password password_confirmation user_role]
+          },
+          doctor: {
+            type: :object,
+            properties: {
+              first_name: { type: :string },
+              last_name: { type: :string },
+              specialty: { type: :string },
+              email: { type: :string },
+              phone: { type: :string },
+              clinic_name: { type: :string },
+              clinic_address: { type: :string },
+              location: { type: :string }
+            }
+          },
+          patient: {
+            type: :object,
+            properties: {
+              first_name: { type: :string },
+              last_name: { type: :string },
+              phone_number: { type: :string },
+              dob: { type: :string, format: :date }
+            }
           }
         }
       }
 
-      response(201, 'created') do
+      response '201', 'user created' do
         let(:user) do
           {
             user: {
-              email: 'doctor@example.com',
-              password: 'password',
-              password_confirmation: 'password',
-              user_role: 'doctor',
-              doctor_attributes: {
-                first_name: 'John',
-                last_name: 'Doe',
-                email: 'doctor@example.com',
-                phone: '1234567890',
-                specialty: 'Dermatology',
-                license_number: 'DOC123',
-                clinic_name: 'Health Clinic',
-                clinic_address: '123 Clinic St',
-                location: 'City',
-                profile_picture: nil
-              }
+              email: 'doc@example.com',
+              password: 'password123',
+              password_confirmation: 'password123',
+              user_role: 'doctor'
+            },
+            doctor: {
+              first_name: 'John',
+              last_name: 'Doe',
+              specialty: 'Dermatology',
+              email: 'doc@example.com',
+              phone: '1234567890',
+              clinic_name: 'Skin Clinic',
+              clinic_address: '123 Main Street',
+              location: 'City A'
             }
           }
         end
-
         run_test!
       end
 
-      response(422, 'invalid request') do
-        let(:user) { { user: { email: 'bad_email' } } }
+      response '422', 'invalid request' do
+        let(:user) do
+          {
+            user: {
+              email: 'bademail',
+              password: 'short',
+              password_confirmation: 'short',
+              user_role: 'doctor'
+            }
+          }
+        end
+        run_test!
+      end
+    end
+  end
+
+  path '/api/v1/users/{id}' do
+    get('show user') do
+      tags 'Users'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response(200, 'found') do
+        let(:id) { User.create(first_name: 'A', last_name: 'B', email: 'a@b.com', user_id: 1).id }
         run_test!
       end
     end
   end
 end
+
