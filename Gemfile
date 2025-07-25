@@ -51,8 +51,6 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
   gem 'rswag'
-  gem 'rswag-api', '~> 2.4'
-  gem 'rswag-ui', '~> 2.4'
   gem 'rswag-specs', '~> 2.4'
   gem 'rspec-rails'
 end
@@ -90,3 +88,5 @@ gem 'mini_magick'
 gem 'will_paginate-bootstrap-style'
 
 gem "active_model_serializers", "~> 0.10.15"
+gem 'rswag-api', '~> 2.4'
+gem 'rswag-ui', '~> 2.4'
