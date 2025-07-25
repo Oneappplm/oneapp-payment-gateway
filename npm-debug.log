@@ -1,0 +1,58 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/hp/.nvm/v0.8.28/bin/node',
+1 verbose cli   '/home/hp/.nvm/v0.8.28/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   '@redocly/cli' ]
+2 info using npm@1.2.30
+3 info using node@v0.8.28
+4 verbose read json /home/hp/.nvm/v0.8.28/lib/package.json
+5 verbose read json /home/hp/.nvm/v0.8.28/lib/package.json
+6 verbose cache add [ '@redocly/cli', null ]
+7 verbose cache add name=undefined spec="@redocly/cli" args=["@redocly/cli",null]
+8 verbose parsed url { pathname: '@redocly/cli',
+8 verbose parsed url   path: '@redocly/cli',
+8 verbose parsed url   href: '@redocly/cli' }
+9 verbose cache add name="" spec="redocly/cli" args=["","redocly/cli"]
+10 verbose parsed url { pathname: 'redocly/cli',
+10 verbose parsed url   path: 'redocly/cli',
+10 verbose parsed url   href: 'redocly/cli' }
+11 silly lockFile 5c487b55-redocly-cli redocly/cli
+12 verbose lock redocly/cli /home/hp/.npm/5c487b55-redocly-cli.lock
+13 info maybeGithub Attempting redocly/cli from git://github.com/redocly/cli
+14 silly lockFile aaf89911-git-github-com-redocly-cli git://github.com/redocly/cli
+15 verbose lock git://github.com/redocly/cli /home/hp/.npm/aaf89911-git-github-com-redocly-cli.lock
+16 verbose addRemoteGit [ 'git://github.com/redocly/cli', 'master' ]
+17 verbose git clone git://github.com/redocly/cli Cloning into bare repository '/home/hp/.npm/_git-remotes/git-github-com-redocly-cli-aaf89911'...
+17 verbose git clone git://github.com/redocly/cli fatal: unable to connect to github.com:
+17 verbose git clone git://github.com/redocly/cli github.com[0: 20.207.73.82]: errno=Connection timed out
+18 silly lockFile aaf89911-git-github-com-redocly-cli git://github.com/redocly/cli
+19 silly lockFile aaf89911-git-github-com-redocly-cli git://github.com/redocly/cli
+20 info maybeGithub Attempting redocly/cli from git+ssh://git@github.com:redocly/cli
+21 silly lockFile 3984869e-t-ssh-git-github-com-redocly-cli git+ssh://git@github.com:redocly/cli
+22 verbose lock git+ssh://git@github.com:redocly/cli /home/hp/.npm/3984869e-t-ssh-git-github-com-redocly-cli.lock
+23 verbose addRemoteGit [ 'git@github.com:redocly/cli', 'master' ]
+24 error git clone git@github.com:redocly/cli Cloning into bare repository '/home/hp/.npm/_git-remotes/git-github-com-redocly-cli-46b3ad1d'...
+24 error git clone git@github.com:redocly/cli git@github.com: Permission denied (publickey).
+24 error git clone git@github.com:redocly/cli fatal: Could not read from remote repository.
+24 error git clone git@github.com:redocly/cli
+24 error git clone git@github.com:redocly/cli Please make sure you have the correct access rights
+24 error git clone git@github.com:redocly/cli and the repository exists.
+25 silly lockFile 46b3ad1d-git-github-com-redocly-cli git@github.com:redocly/cli
+26 silly lockFile 5c487b55-redocly-cli redocly/cli
+27 silly lockFile 5c487b55-redocly-cli redocly/cli
+28 error addLocal Could not install redocly/cli
+29 error Error: ENOENT, stat 'redocly/cli'
+30 error If you need help, you may report this log at:
+30 error     <http://github.com/isaacs/npm/issues>
+30 error or email it to:
+30 error     <npm-@googlegroups.com>
+31 error System Linux 6.8.0-63-generic
+32 error command "/home/hp/.nvm/v0.8.28/bin/node" "/home/hp/.nvm/v0.8.28/bin/npm" "install" "-g" "@redocly/cli"
+33 error cwd /home/hp/project/pawan/oneapp-payment-gateway
+34 error node -v v0.8.28
+35 error npm -v 1.2.30
+36 error path redocly/cli
+37 error code ENOENT
+38 error errno 34
+39 verbose exit [ 34, true ]
