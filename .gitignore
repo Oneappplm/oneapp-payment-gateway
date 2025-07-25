@@ -41,3 +41,5 @@
 
 /config/credentials/development.key
 /config/keys/medv-token.json
+
+/config/credentials/production.key
